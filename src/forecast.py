@@ -2,47 +2,68 @@
 # # Forecast Net Demand
 
 # %%
+from keras.models import load_model
+import tensorflow as tf
+import glob
+import joblib
+from sklearn.preprocessing import StandardScaler
+import numpy as np
+import holidays
+import datetime as dt
 import pandas as pd
 from sqlalchemy import create_engine
+import os
+from dotenv import load_dotenv
 
-engine = create_engine("postgresql://jason404:Jason404.top@localhost/postgres?options=-csearch_path%3Dsp-df", echo=False)
+# Load the environment variables from the .env file
+load_dotenv('.env')
+
+# Get the values of host, user, pswd, db, and schema from the environment variables
+host = os.getenv('host')
+user = os.getenv('user')
+pswd = os.getenv('pswd')
+db = os.getenv('db')
+schema = os.getenv('schema')
+
+
+# Use the values as needed
+engine = create_engine(
+    f"postgresql://{user}:{pswd}@{host}/{db}?options=-csearch_path%3D{schema}", echo=False)
 conn = engine.connect()
 
 # %% [markdown]
 # ## Import data from CSV to PostgreSQL
-# 
+#
 # This step is used for testing purposes.
-# 
+#
 # Set `IMPORT_DATA` to `False` to skip this step.
 
 # %%
 IMPORT_DATA = False
 
 # %%
-import pandas as pd
-import datetime as dt
 
 if IMPORT_DATA:
-    
+
     # Load and filer data from csv file
-    
+
     rt_dpr = pd.read_csv('./data/RT_DPR.csv')
-    rt_dpr = rt_dpr[['Date', 'Period', 'Demand', 'TCL', 'TransmissionLoss']]
-    rt_dpr['TransmissionLoss'] = rt_dpr['TransmissionLoss'].fillna(0)
+    rt_dpr = rt_dpr[['Date', 'Period', 'Demand', 'TCL', 'Transmission_Loss']]
+    rt_dpr['Transmission_Loss'] = rt_dpr['Transmission_Loss'].fillna(0)
     rt_dpr = rt_dpr[rt_dpr['Date'] > '2023-06-30']
     rt_dpr = rt_dpr.sort_values(by=['Date', 'Period'])
     rt_dpr.reset_index(drop=True, inplace=True)
-    
+
     vc_per = pd.read_csv('./data/VCData_Period.csv')
-    
-    rt_dpr.to_sql('RealTime_DPR', conn, if_exists='replace', index=False)
+
+    # !!! The Real_Time_DPR table here is different from the one Matthew uses. Don't replace.
+    # rt_dpr.to_sql('Real_Time_DPR', conn, if_exists='replace', index=False)
     vc_per.to_sql('VCData_Period', conn, if_exists='replace', index=False)
 
 # %% [markdown]
 # ## Data from DB
 
 # %%
-import datetime as dt
 
 now = dt.datetime.now()
 date = now.strftime("%Y-%m-%d")
@@ -66,8 +87,8 @@ print(f"To predict: {next_date} Period {next_period}")
 
 # %%
 rt_dpr = pd.read_sql(f"""
-                     SELECT "Date", "Period", "Demand", "TCL", "TransmissionLoss" 
-                     FROM "RealTime_DPR" 
+                     SELECT "Date", "Period", "Demand", "TCL", "Transmission_Loss"
+	                 FROM public."Real_Time_DPR"
                      WHERE ("Date" < '{date}' OR ("Date" = '{date}' AND "Period" < {next_period}))
                      ORDER BY "Date" DESC, "Period" DESC  
                      LIMIT 336
@@ -80,32 +101,46 @@ rt_dpr.head(2)
 rt_dpr.tail(2)
 
 # %%
-vc_per = pd.read_sql('SELECT * FROM "VCData_Period"', conn)
-vc_per.head(2)
+vc_per = pd.read_sql('SELECT * FROM public."VCData_Period"', conn)
+vc_per
 
 # %%
-import holidays
+vc_per[(vc_per['Year'] == 2024) & (
+    vc_per['Quarter'] == 1)]['TCQ_Weekday'].values
+
+# %%
 
 # Calculate required data fields
 
 sg_holidays = holidays.country_holidays('SG')
 
-rt_dpr['Total Demand'] = rt_dpr['Demand'] + rt_dpr['TCL'] + rt_dpr['TransmissionLoss']
+rt_dpr['Total Demand'] = rt_dpr['Demand'] + \
+    rt_dpr['TCL'] + rt_dpr['Transmission_Loss']
 view = rt_dpr[['Date', 'Period', 'Total Demand']].copy()
+
 
 def find_tcq(row):
     # print(row)
-    date_obj = dt.datetime.strptime(row['Date'], '%Y-%m-%d')
+    date_obj = dt.datetime.strptime(str(row['Date']), '%Y-%m-%d')
     year = date_obj.year
     quarter = (date_obj.month - 1) // 3 + 1
-    
+
+    period = row['Period']
+
     isWeekend = 1 if date_obj.isoweekday() > 5 else 0
     isPublicHoliday = date_obj in sg_holidays
-    
+
     if isWeekend or isPublicHoliday:
-        return vc_per[(vc_per['Year'] == year) & (vc_per['Quarter'] == quarter)]['TCQ_Weekend_PH'].values[0] / 1000
+        # print(f"Date: {date_obj} isWeekend: {isWeekend} isPublicHoliday: {isPublicHoliday}")
+        tcq = vc_per[(vc_per['Year'] == year) & (vc_per['Quarter'] == quarter) & (
+            vc_per['Period'] == period)]['TCQ_Weekday'].values[0] / 1000
     else:
-        return vc_per[(vc_per['Year'] == year) & (vc_per['Quarter'] == quarter)]['TCQ_Weekday'].values[0] / 1000
+        tcq = vc_per[(vc_per['Year'] == year) & (vc_per['Quarter'] == quarter) & (
+            vc_per['Period'] == period)]['TCQ_Weekend_PH'].values[0] / 1000
+
+    # print(f"Date: {date_obj} TCQ: {tcq}")
+    return tcq
+
 
 view['TCQ'] = view.apply(lambda row: find_tcq(row), axis=1)
 view['Net Demand'] = view['Total Demand'] - view['TCQ']
@@ -113,34 +148,29 @@ view.reset_index(drop=True, inplace=True)
 # view.head(2)
 
 # %%
-import numpy as np
-from sklearn.preprocessing import StandardScaler
-import joblib
-import os
-import glob
-
-resDir = './model/'
-resources = os.listdir(resDir)
-resources.sort(reverse=True)
-newest = resources[0]
 
 # Load the most recent scaler file
-scaler_files = glob.glob(resDir + newest + '/*.pkl')
-if type(scaler_files) == str:
-    scaler = joblib.load(scaler_files)
-    print("Loaded scaler:", scaler_files)
-else:
-    scaler = joblib.load(scaler_files[0])
-    print("Loaded scaler:", scaler_files[0])
+resDir = './model'
+newestDir = max(glob.glob(os.path.join(resDir, '*/')), key=os.path.getmtime)
+newestDir
+
+# %%
+scaler_files = glob.glob(os.path.join(newestDir, "*.pkl"))
+print("Scaler files:", scaler_files)
+scaler = joblib.load(scaler_files[0])
+print("Loaded scaler:", scaler_files[0])
 
 # Perform data preprocessing as before
 data = view.copy()
 data['Target'] = data['Net Demand']
-data['Target'] = scaler.fit_transform(data['Target'].values.reshape(-1,1))
+data['Target'] = scaler.fit_transform(data['Target'].values.reshape(-1, 1))
 
 # Create dataset for prediction
+
+
 def create_dataset(dataset):
     return np.array([dataset])
+
 
 predict_X = create_dataset(data['Target'].values)
 
@@ -152,30 +182,29 @@ print(f"Predict_X shape: {predict_X.shape}")
 # ## Predict using trained model
 
 # %%
-import tensorflow as tf
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 tf.keras.utils.disable_interactive_logging()
-# tf.config.set_soft_device_placement(False)
-# tf.debugging.set_log_device_placement(False)
 
-print("Num CPUs Available: ", len(tf.config.experimental.list_physical_devices('CPU')))
-
-tf.device('/CPU:0')
+print("Num GPUs Available: ", len(
+    tf.config.experimental.list_physical_devices('GPU')))
 
 # %%
-import os
-import glob
-from keras.models import load_model
 
-model_file = glob.glob(resDir + newest + '/*.keras')
-if type(model_file) == list:
-    model_file = model_file[0]
+# Get a list of all model files in the directory
+model_files = glob.glob(os.path.join(newestDir, "*.keras"))
+
+# Sort the list of model files by modification time (most recent first)
+model_files.sort(key=os.path.getmtime, reverse=True)
+
+# Select the most recent model file
+most_recent_model_file = model_files[0]
 
 # Load the selected model
-model = load_model(model_file)
+model = load_model(most_recent_model_file)
 
 # Print the path of the loaded model for verification
-print("Loaded model:", model_file)
+print("Loaded model:", most_recent_model_file)
 
 
 # Make predictions
@@ -189,35 +218,4 @@ inverted_predictions = scaler.inverse_transform(predict_result)
 # Print or use the predictions as needed
 print(f"Predictions: {inverted_predictions[0][0]}")
 
-# %% [markdown]
-# ## Save predictions to PostgreSQL
-
 # %%
-# Create a DataFrame with the predicted result
-prediction_df = pd.DataFrame({
-    'Date': [next_date], 
-    'Period': [next_period], 
-    'Net_Demand': [inverted_predictions[0][0]]
-    })
-
-# Check if the table exists
-table_exists = engine.dialect.has_table(conn, 'Predictions')
-
-if table_exists:
-    print("Table exists")
-    # Append the value if the table exists
-    prediction_df.to_sql('Predictions', conn, if_exists='append', index=False)
-else:
-    print("Table doesn't exist")
-    # Create the table if it doesn't exist
-    prediction_df.to_sql('Predictions', conn, if_exists='replace', index=False)
-
-
-# %%
-conn.commit()
-conn.close()
-
-# %%
-
-
-

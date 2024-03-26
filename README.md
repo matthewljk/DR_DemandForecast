@@ -7,6 +7,15 @@ Python environment is managed by `conda`. To create the environment, run:
 conda env create -f environment.yml
 ```
 
+To establish a connection with the database, create a `.env` file in the root directory with the following content:
+```bash
+host = '<url to db>'
+user = '<username>'
+pswd = '<password>'
+db = '<database name>'
+schema = '<shcema name, usually being 'public'>'
+```
+
 Data (DPR) updated to 2024-03-25 Period 33.
 
 1. Data analysis: `data_analysis.ipynb`
