@@ -2,13 +2,22 @@
 # # Forecast Net Demand
 
 # %%
+# Set to true when running by CronTab
+crontab = True
+
+# %%
+ROOT = '/home/sdc/DR_DemandForecast'
+if not crontab: ROOT = '.'
+
+# %%
 import pandas as pd
 from sqlalchemy import create_engine
 import os
 from dotenv import load_dotenv
 
 # Load the environment variables from the .env file
-load_dotenv('.env')
+env_file = f'{ROOT}/.env' if crontab else '.env'
+load_dotenv(env_file)
 
 # Get the values of host, user, pswd, db, and schema from the environment variables
 host = os.getenv('host')
@@ -76,19 +85,18 @@ else:
     next_period = period + 1
     next_date = date
 
-# next_date = '2024-03-25' # A hard-coded value for testing
-# next_period = 33 # A hard-coded value for testing
-print(f"Now is {date} {time} Period {period}")
-print(f"To predict: {next_date} Period {next_period}")
+# next_date = '2024-03-27' # A hard-coded value for testing
+# next_period = 27 # A hard-coded value for testing
+print(f"# @ {date} {time} Period {period} -> Predict: {next_date} Period {next_period}")
 
 # %%
 rt_dpr = pd.read_sql(f"""
-                     SELECT "Date", "Period", "Demand", "TCL", "Transmission_Loss"
-	                 FROM public."Real_Time_DPR"
-                     WHERE ("Date" < '{date}' OR ("Date" = '{date}' AND "Period" < {next_period}))
-                     ORDER BY "Date" DESC, "Period" DESC  
-                     LIMIT 336
-                     """, conn)
+SELECT "Date", "Period", "Demand", "TCL", "Transmission_Loss"
+FROM public."Real_Time_DPR"
+WHERE ("Date" < '{date}' OR ("Date" = '{next_date}' AND "Period" < {next_period}))
+ORDER BY "Date" DESC, "Period" DESC  
+LIMIT 336
+""", conn)
 rt_dpr.sort_values(by=['Date', 'Period'], inplace=True)
 rt_dpr.reset_index(drop=True, inplace=True)
 
@@ -147,16 +155,16 @@ import os
 import glob
 
 # Load the most recent scaler file
-resDir = './model'
+resDir = f'{ROOT}/model'
 newestDir = max(glob.glob(os.path.join(resDir, '*/')), key=os.path.getmtime)
-newestDir = './model/20240325_1527/'
-newestDir
+# newestDir = './model/20240325_1527/'
+if not crontab: print(newestDir)
 
 # %%
 scaler_files = glob.glob(os.path.join(newestDir, "*.pkl"))
-print("Scaler files:", scaler_files)
+if not crontab: print("Scaler files:", scaler_files)
 scaler = joblib.load(scaler_files[0])
-print("Loaded scaler:", scaler_files[0])
+if not crontab: print("Loaded scaler:", scaler_files[0])
 
 # Transform data using the loaded scaler
 data = view.copy()
@@ -171,18 +179,16 @@ predict_X = create_dataset(data['Target'].values)
 # Reshape input to be [samples, time steps, features]
 predict_X = np.reshape(predict_X, (predict_X.shape[0], predict_X.shape[1], 1))
 
-print(f"Predict_X shape: {predict_X.shape}")
+if not crontab: print(f"Predict_X shape: {predict_X.shape}")
 
 # %% [markdown]
 # ## Make prediction
 
 # %%
 import tensorflow as tf
+tf.keras.utils.disable_interactive_logging()
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
-# tf.keras.utils.disable_interactive_logging()
-
-# print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
+if not crontab: print("Num GPUs Available: ", len(tf.config.experimental.list_physical_devices('GPU')))
 
 # %%
 import os
@@ -202,7 +208,7 @@ most_recent_model_file = model_files[0]
 model = load_model(most_recent_model_file, )
 
 # Print the path of the loaded model for verification
-print("Loaded model:", most_recent_model_file)
+if not crontab: print("Loaded model:", most_recent_model_file)
 
 
 # Make predictions
@@ -224,7 +230,8 @@ from sqlalchemy import text
 
 # Check if the table 'Predicted_Net_Demand' exists
 table_exists = engine.dialect.has_table(conn, 'Predicted_Net_Demand')
-print(f"Table 'Predicted_Net_Demand' exists: {table_exists}")
+if not crontab: print(f"Table 'Predicted_Net_Demand' exists: {table_exists}")
+
 if not table_exists:
     # Create the table 'Predicted_Net_Demand'
     create_table_query = """
@@ -246,7 +253,8 @@ SELECT EXISTS (
 )
 """
 row_exists = conn.execute(text(row_exists_query)).scalar()
-print(f"Row exists: {row_exists}")
+if not crontab: print(f"Row exists: {row_exists}")
+
 if row_exists:
     # Update the existing row with the predicted net demand
     update_query = f"""
