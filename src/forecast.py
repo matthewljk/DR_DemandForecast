@@ -220,7 +220,45 @@ inverted_predictions = scaler.inverse_transform(predict_result)
 
 # %%
 # Print or use the predictions as needed
-print(f"Predictions: {inverted_predictions[0][0]}")
+if not crontab: print(f"Predictions: {inverted_predictions[0][0]}")
+
+# %% [markdown]
+# ## Add VCData back
+
+# %%
+def total_demand(row):
+    # print(row)
+    date_obj = dt.datetime.strptime(str(row['Date']), '%Y-%m-%d')
+    year = date_obj.year
+    quarter = (date_obj.month - 1) // 3 + 1
+    
+    period = row['Period']
+    
+    isWeekend = 1 if date_obj.isoweekday() > 5 else 0
+    isPublicHoliday = date_obj in sg_holidays
+    
+    if isWeekend or isPublicHoliday:
+        # print(f"Date: {date_obj} isWeekend: {isWeekend} isPublicHoliday: {isPublicHoliday}")
+        tcq = vc_per[(vc_per['Year'] == year) & (vc_per['Quarter'] == quarter) & (vc_per['Period'] == period)]['TCQ_Weekday'].values[0] / 1000
+    else:
+        tcq = vc_per[(vc_per['Year'] == year) & (vc_per['Quarter'] == quarter) & (vc_per['Period'] == period)]['TCQ_Weekend_PH'].values[0] / 1000
+
+    demand = tcq + row["Predicted_Demand"]
+    return demand
+
+# %%
+data = {
+    "Date": [next_date],
+    "Period": [next_period],
+    "Predicted_Demand": [inverted_predictions[0][0]]
+}
+
+data = pd.DataFrame(data)
+
+# %%
+data["Predicted_Demand"] = data.apply(lambda row: total_demand(row), axis=1)
+predicted_demand = data["Predicted_Demand"][0]
+print(f"Predicted Demand: {predicted_demand}")
 
 # %% [markdown]
 # ## Save prediction to DB
@@ -228,17 +266,17 @@ print(f"Predictions: {inverted_predictions[0][0]}")
 # %%
 from sqlalchemy import text
 
-# Check if the table 'Predicted_Net_Demand' exists
-table_exists = engine.dialect.has_table(conn, 'Predicted_Net_Demand')
-if not crontab: print(f"Table 'Predicted_Net_Demand' exists: {table_exists}")
+# Check if the table 'Predicted_Demand' exists
+table_exists = engine.dialect.has_table(conn, 'Predicted_Demand')
+if not crontab: print(f"Table 'Predicted_Demand' exists: {table_exists}")
 
 if not table_exists:
-    # Create the table 'Predicted_Net_Demand'
+    # Create the table 'Predicted_Demand'
     create_table_query = """
-    CREATE TABLE public."Predicted_Net_Demand" (
+    CREATE TABLE public."Predicted_Demand" (
         "Date" DATE,
         "Period" INTEGER,
-        "Predicted_Net_Demand" FLOAT,
+        "Predicted_Demand" FLOAT,
         PRIMARY KEY ("Date", "Period")
     )
     """
@@ -248,7 +286,7 @@ if not table_exists:
 row_exists_query = f"""
 SELECT EXISTS (
     SELECT 1
-    FROM public."Predicted_Net_Demand"
+    FROM public."Predicted_Demand"
     WHERE "Date" = '{next_date}' AND "Period" = '{next_period}'
 )
 """
@@ -258,16 +296,16 @@ if not crontab: print(f"Row exists: {row_exists}")
 if row_exists:
     # Update the existing row with the predicted net demand
     update_query = f"""
-    UPDATE public."Predicted_Net_Demand"
-    SET "Predicted_Net_Demand" = {inverted_predictions[0][0]}
+    UPDATE public."Predicted_Demand"
+    SET "Predicted_Demand" = {predicted_demand}
     WHERE "Date" = '{next_date}' AND "Period" = {next_period}
     """
     conn.execute(text(update_query))
 else:
     # Insert a new row with the predicted net demand
     insert_query = f"""
-    INSERT INTO public."Predicted_Net_Demand" ("Date", "Period", "Predicted_Net_Demand")
-    VALUES ('{next_date}', {next_period}, {inverted_predictions[0][0]})
+    INSERT INTO public."Predicted_Demand" ("Date", "Period", "Predicted_Demand")
+    VALUES ('{next_date}', {next_period}, {predicted_demand})
     """
     conn.execute(text(insert_query))
 

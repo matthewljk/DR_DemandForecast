@@ -2,21 +2,30 @@
 
 ## ML/DL forecast
 
+### Python ENV
+
 Python environment is managed by `conda`. To create the environment, run:
 ```bash
 conda env create -f environment.yml
 ```
 
-To establish a connection with the database, create a `.env` file in the root directory with the following content:
+To create python environment to run on CPU-only server, run:
 ```bash
-host = '<url to db>'
-user = '<username>'
-pswd = '<password>'
-db = '<database name>'
-schema = '<shcema name, usually being 'public'>'
+conda env create -f environment-cpu.yml
 ```
 
-Data (DPR) updated to 2024-03-25 Period 33.
+### ENV variables
+
+To establish a connection with the database, create a `.env` file in the root directory with the following content:
+```bash
+host='<url to db>'
+user='<username>'
+pswd='<password>'
+db='<database name>'
+schema='<shcema name, usually public>'
+```
+
+### Notebooks
 
 1. Data analysis: `data_analysis.ipynb`
 2. Data processing demo: `net_demand.ipynb`
@@ -25,6 +34,10 @@ Data (DPR) updated to 2024-03-25 Period 33.
    - `lstm_bi.ipynb`
 4. Forecasting: `forecast.ipynb` -> `src/forecast.py`
 5. Compare predicted values with real values: `compare.ipynb`
+
+### Data
+
+Data (DPR) updated to 2024-03-25 Period 33.
 
 Scalers and models are saved under `model/` directory, using datetime as subfolder name.
 
