@@ -99,12 +99,13 @@ LIMIT 336
 """, conn)
 rt_dpr.sort_values(by=['Date', 'Period'], inplace=True)
 rt_dpr.reset_index(drop=True, inplace=True)
+rt_dpr.fillna(0, inplace=True)
 
-rt_dpr.iloc[[0, -1]]
+# rt_dpr.iloc[[0, -1]]
 
 # %%
 vc_per = pd.read_sql('SELECT * FROM public."VCData_Period"', conn)
-vc_per.iloc[[0, -1]]
+# vc_per.iloc[[0, -1]]
 
 # %% [markdown]
 # ## Construct input data
@@ -142,7 +143,10 @@ def find_tcq(row):
 view['TCQ'] = view.apply(lambda row: find_tcq(row), axis=1)
 view['Net Demand'] = view['Total Demand'] - view['TCQ']
 view.reset_index(drop=True, inplace=True)
-# view.head(2)
+
+
+# %%
+# view.tail(10)
 
 # %% [markdown]
 # ## Load scaler
@@ -258,7 +262,7 @@ data = pd.DataFrame(data)
 # %%
 data["Predicted_Demand"] = data.apply(lambda row: total_demand(row), axis=1)
 predicted_demand = data["Predicted_Demand"][0]
-print(f"Predicted Demand: {predicted_demand}")
+print(f"# Predicted Demand: {predicted_demand}")
 
 # %% [markdown]
 # ## Save prediction to DB
