@@ -1,0 +1,490 @@
+<?xml version='1.0' encoding='utf-8'?><env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+  <env:Header/>
+  <env:Body>
+    <m:USEPDemandForcastWebServiceResponse xmlns:m="http://com/emc/nems/wsd/webservices/reports/corpdata">
+      <m:return>&lt;?xml version="1.0" encoding="UTF-8"?>&lt;list>
+&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>1&lt;/period>
+&lt;demand>6246.49&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>157.45&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>2&lt;/period>
+&lt;demand>6124.551&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>141.06&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>3&lt;/period>
+&lt;demand>5963.836&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>126.16&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>4&lt;/period>
+&lt;demand>5886.224&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>123.67&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>5&lt;/period>
+&lt;demand>5820.75&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>123.66&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>6&lt;/period>
+&lt;demand>5762.829&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>122.52&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>7&lt;/period>
+&lt;demand>5735.44&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP&gt;122.86&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>8&lt;/period>
+&lt;demand>5719.093&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>116.81&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>9&lt;/period>
+&lt;demand>5716.201&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>116.81&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>10&lt;/period>
+&lt;demand>5725.52&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>121.85&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>11&lt;/period>
+&lt;demand>5829.576&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>123.03&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>12&lt;/period>
+&lt;demand>5995.987&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>130.52&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>13&lt;/period>
+&lt;demand>6174.306&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>125.74&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>14&lt;/period>
+&lt;demand>6328.535&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>131.79&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>15&lt;/period>
+&lt;demand>6501.679&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>161.13&lt;/USEP>
+&lt;solar>1.67&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>16&lt;/period>
+&lt;demand>6721.463&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>216.36&lt;/USEP>
+&lt;solar>10.04&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>17&lt;/period>
+&lt;demand>6935.416&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>519.91&lt;/USEP>
+&lt;solar>28.08&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>18&lt;/period>
+&lt;demand>7018.907&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>646.22&lt;/USEP>
+&lt;solar>85.02&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>19&lt;/period>
+&lt;demand>7015.661&lt;/demand>
+&lt;TCL>11.000&lt;/TCL>
+&lt;LCP>1621.90&lt;/LCP>
+&lt;USEP>540.38&lt;/USEP>
+&lt;solar>165.9&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>20&lt;/period>
+&lt;demand>6999.051&lt;/demand>
+&lt;TCL>11.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>520.19&lt;/USEP>
+&lt;solar>259.32&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>21&lt;/period>
+&lt;demand>6969.755&lt;/demand>
+&lt;TCL>4.000&lt;/TCL>
+&lt;LCP>4415.21&lt;/LCP>
+&lt;USEP>449.48&lt;/USEP>
+&lt;solar>355.49&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>22&lt;/period>
+&lt;demand>6910.82&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>204.53&lt;/USEP>
+&lt;solar>447.08&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>23&lt;/period>
+&lt;demand>6847.552&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>159.01&lt;/USEP>
+&lt;solar>511.59&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>24&lt;/period>
+&lt;demand>6763.092&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>135.79&lt;/USEP>
+&lt;solar>550.03&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>25&lt;/period>
+&lt;demand>6720.668&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>131.80&lt;/USEP>
+&lt;solar>568.29&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>26&lt;/period>
+&lt;demand>6761.705&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>154.64&lt;/USEP>
+&lt;solar>570.01&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>27&lt;/period>
+&lt;demand>6796.868&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>157.44&lt;/USEP>
+&lt;solar>565.64&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>28&lt;/period>
+&lt;demand>6814.854&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>157.95&lt;/USEP>
+&lt;solar>565.62&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>29&lt;/period>
+&lt;demand>6818.885&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>136.25&lt;/USEP>
+&lt;solar>552.91&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>30&lt;/period>
+&lt;demand>6868.331&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>159.82&lt;/USEP>
+&lt;solar>525.97&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>31&lt;/period>
+&lt;demand>6893.718&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>173.92&lt;/USEP>
+&lt;solar>488.07&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>32&lt;/period>
+&lt;demand>6975.445&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>355.27&lt;/USEP>
+&lt;solar>437.85&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>33&lt;/period>
+&lt;demand>7045.447&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>520.29&lt;/USEP>
+&lt;solar>371.78&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>34&lt;/period>
+&lt;demand>7165.919&lt;/demand>
+&lt;TCL>11.000&lt;/TCL>
+&lt;LCP>21.35&lt;/LCP>
+&lt;USEP>520.17&lt;/USEP>
+&lt;solar>206.42&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>35&lt;/period>
+&lt;demand>7203.81&lt;/demand>
+&lt;TCL>11.000&lt;/TCL>
+&lt;LCP>4500.00&lt;/LCP>
+&lt;USEP>613.05&lt;/USEP>
+&lt;solar>105.12&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>36&lt;/period>
+&lt;demand>7088.09&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>477.95&lt;/USEP>
+&lt;solar>95.88&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>37&lt;/period>
+&lt;demand>7021.735&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>360.75&lt;/USEP>
+&lt;solar>68.51&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>38&lt;/period>
+&lt;demand>7078.682&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>427.04&lt;/USEP>
+&lt;solar>36.89&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>39&lt;/period>
+&lt;demand>7115.052&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>485.57&lt;/USEP>
+&lt;solar>5.98&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>40&lt;/period>
+&lt;demand>7071.753&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>427.15&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>41&lt;/period>
+&lt;demand>7020.18&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>444.17&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>42&lt;/period>
+&lt;demand>6980.713&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>315.85&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>43&lt;/period>
+&lt;demand>6936.226&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>253.42&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>44&lt;/period>
+&lt;demand>6792.534&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>194.39&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>45&lt;/period>
+&lt;demand>6658.741&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>186.61&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>46&lt;/period>
+&lt;demand>6525.396&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>150.89&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>47&lt;/period>
+&lt;demand>6452.322&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP>
+&lt;USEP>156.56&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;USEPDemandData>
+&lt;reportType>USP&lt;/reportType>
+&lt;tradingDate>19-MAR-2024&lt;/tradingDate>
+&lt;period>48&lt;/period>
+&lt;demand>6434.922&lt;/demand>
+&lt;TCL>0.000&lt;/TCL>
+&lt;LCP>0.00&lt;/LCP&gt;
+&lt;USEP>189.66&lt;/USEP>
+&lt;solar>0&lt;/solar>
+&lt;/USEPDemandData>
+			&lt;/list>
+</m:return>
+    </m:USEPDemandForcastWebServiceResponse>
+  </env:Body>
+</env:Envelope>

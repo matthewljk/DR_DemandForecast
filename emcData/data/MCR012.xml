@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?><env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+  <env:Header/>
+  <env:Body>
+    <m:getMCRReportResponse xmlns:m="http://com/emc/nems/wsd/webservices/reports/mpapi">
+      <m:return>&lt;?xml version="1.0" encoding="UTF-8"?>&lt;list>
+&lt;MCR012Report>
+&lt;ResultDate>19-Mar-2023&lt;/ResultDate>
+&lt;ResultPeriod>1&lt;/ResultPeriod>
+&lt;AncillaryService>REGULATION&lt;/AncillaryService>
+&lt;ReserveRequirementMW>102.68&lt;/ReserveRequirementMW>
+&lt;Price>10.0&lt;/Price>
+&lt;RegulationShortfallMW>0.0&lt;/RegulationShortfallMW>
+&lt;MCRID>F72FB761FD310128E0530A010A0B1DFF&lt;/MCRID>
+&lt;/MCR012Report>
+&lt;MCR012Report>
+&lt;ResultDate>19-Mar-2023&lt;/ResultDate>
+&lt;ResultPeriod>1&lt;/ResultPeriod>
+&lt;AncillaryService>PRIMARY RESERVE&lt;/AncillaryService>
+&lt;ReserveRequirementMW>155.959&lt;/ReserveRequirementMW>
+&lt;Price>0.01&lt;/Price>
+&lt;RegulationShortfallMW>0.0&lt;/RegulationShortfallMW>
+&lt;MCRID>F72FB761FD310128E0530A010A0B1DFF&lt;/MCRID>
+&lt;/MCR012Report>
+&lt;MCR012Report>
+&lt;ResultDate>19-Mar-2023&lt;/ResultDate>
+&lt;ResultPeriod>1&lt;/ResultPeriod>
+&lt;AncillaryService>CONTINGENCY RESERVE&lt;/AncillaryService>
+&lt;ReserveRequirementMW>380.0&lt;/ReserveRequirementMW>
+&lt;Price>0.1&lt;/Price>
+&lt;RegulationShortfallMW>0.0&lt;/RegulationShortfallMW>
+&lt;MCRID>F72FB761FD310128E0530A010A0B1DFF&lt;/MCRID>
+&lt;/MCR012Report>
+&lt;/list>
+</m:return>
+    </m:getMCRReportResponse>
+  </env:Body>
+</env:Envelope>

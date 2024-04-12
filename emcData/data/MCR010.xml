@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?><env:Envelope xmlns:env="http://schemas.xmlsoap.org/soap/envelope/">
+  <env:Header/>
+  <env:Body>
+    <m:getMCRReportResponse xmlns:m="http://com/emc/nems/wsd/webservices/reports/mpapi">
+      <m:return>&lt;?xml version="1.0" encoding="UTF-8"?>&lt;list>
+&lt;MCR010Report>
+&lt;ResultDate>19-Mar-2023&lt;/ResultDate>
+&lt;ResultPeriod>1&lt;/ResultPeriod>
+&lt;TotalLoadMW>5772.153&lt;/TotalLoadMW>
+&lt;TotalCurtailedLoad>0.000&lt;/TotalCurtailedLoad>
+&lt;RegulatoryLoadQuantity>505.03&lt;/RegulatoryLoadQuantity>
+&lt;UniformSingaporeEnergyPrice>362.75&lt;/UniformSingaporeEnergyPrice>
+&lt;CounterfactualUniformSingaporeEnergyPrice/>
+&lt;LoadCurtailmentPrice>0.00&lt;/LoadCurtailmentPrice>
+&lt;EnergyShortfallMW>0&lt;/EnergyShortfallMW>
+&lt;TotalTransmissionLossMW>33.021&lt;/TotalTransmissionLossMW>
+&lt;MCRID>F72FB761FD310128E0530A010A0B1DFF&lt;/MCRID>
+&lt;EstimatesHourlyEnergyUpliftRebate>-1.74&lt;/EstimatesHourlyEnergyUpliftRebate>
+&lt;SolarMW/>
+&lt;/MCR010Report>
+&lt;/list>
+</m:return>
+    </m:getMCRReportResponse>
+  </env:Body>
+</env:Envelope>

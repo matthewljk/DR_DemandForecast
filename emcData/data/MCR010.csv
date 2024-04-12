@@ -1,0 +1,2 @@
+ForecastDate,ForecastPeriod,TotalLoad,TCL,RLQ,USEP,CUSEP,LCP,EnergyShortfall,TransmissionLoss,EHEUR,Solar
+2023-08-05,1,5927.013,0.000,486.147,117.46,,0.00,0,32.611,-0.53,
