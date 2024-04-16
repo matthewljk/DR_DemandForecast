@@ -2,8 +2,8 @@
 # # Scheduled NEMS Data fetching to Database
 
 # %%
-crontab = False
-ROOT = '/home/sdc/emcData'
+crontab = True
+ROOT = '/home/sdc/DR_DemandForecast/emcData'
 
 # %%
 from dep import nemsData2 as nems
@@ -310,7 +310,7 @@ period = int(now.strftime("%H")) * 2 + int(now.strftime("%M")) // 30 + 1
 
 # %%
 
-print(f"Fetching {run_date_str} Period {period}", end=" ")
+print(f"[{run_date_str} Period {period}]", end="")
 
 ''' Get Corp for DPR and LAR respectively '''
 print(" Corp", end="")
@@ -526,7 +526,7 @@ exist = 0
 new = 0
 
 ''' DPR '''
-print("DPR", end='')
+print(" DPR", end='')
 # DPR required data
 corp_peri_df = corp_dpr[
     (corp_dpr['Date'] == run_date_str) & 
@@ -548,7 +548,7 @@ else: exist += 1
 conn.commit()
 
 # %%
-print("LAR", end='')
+print(" LAR", end='')
 # LAR required data
 corp_peri_df = corp_lar[
     (corp_lar['Date'] == run_date_str) & 
@@ -603,8 +603,8 @@ conn.commit()
 conn.close()
 
 # %%
-print("All done!")
-print(f"Updated {exist}rows. Added {new} rows.")
+print(" All done!", end='')
+print(f" Updated {exist} rows. Added {new} rows.")
 
 # %%
 
