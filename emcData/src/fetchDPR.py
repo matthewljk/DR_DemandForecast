@@ -165,7 +165,7 @@ def waitAndRetry(func, targetType, *args):
 # %%
 
 runDate = dt.strptime('05-Aug-2023', '%d-%b-%Y')
-endDate = dt.strptime('07-Aug-2023', '%d-%b-%Y')
+endDate = dt.strptime('10-Apr-2024', '%d-%b-%Y')
 # endDate = dt.strptime('10-Apr-2024', '%d-%b-%Y')
 delta = td(days=1)
 
