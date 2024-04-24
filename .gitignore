@@ -2,4 +2,4 @@ dev_*
 
 .env
 
-**/cron
+**/cron.log
