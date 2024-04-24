@@ -1,2 +1,0 @@
-20 * * * * /home/sdc/miniconda3/envs/sp-tf-cpu/bin/python /home/sdc/DR_DemandForecast/src/forecast.py >> /home/sdc/DR_DemandForecast/log/cron 2>&1
-50 * * * * /home/sdc/miniconda3/envs/sp-tf-cpu/bin/python /home/sdc/DR_DemandForecast/src/forecast.py >> /home/sdc/DR_DemandForecast/log/cron 2>&1
