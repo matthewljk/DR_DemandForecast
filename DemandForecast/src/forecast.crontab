@@ -1,0 +1,4 @@
+10 * * * * /home/sdc/miniconda3/envs/emcdata/bin/python /home/sdc/DR_DemandForecast/emcData/src/fetch.crontab.py >> /home/sdc/DR_DemandForecast/emcData/log/cron.log 2>&1
+20 * * * * /home/sdc/miniconda3/envs/sp-tf-cpu/bin/python /home/sdc/DR_DemandForecast/src/forecast.py >> /home/sdc/DR_DemandForecast/log/cron 2>&1
+40 * * * * /home/sdc/miniconda3/envs/emcdata/bin/python /home/sdc/DR_DemandForecast/emcData/src/fetch.crontab.py >> /home/sdc/DR_DemandForecast/emcData/log/cron.log 2>&1
+50 * * * * /home/sdc/miniconda3/envs/sp-tf-cpu/bin/python /home/sdc/DR_DemandForecast/src/forecast.py >> /home/sdc/DR_DemandForecast/log/cron 2>&1

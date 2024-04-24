@@ -19,8 +19,8 @@ import xml.etree.ElementTree as ET
 import pandas as pd
 import requests
 RUNTIME = 'API'
-DATADIR = '/home/sdc/emcData/data/'
-TESTDATE = '05-Aug-2023'
+DATADIR = '/home/sdc/DR_DemandForecast/emcData/data'
+TESTDATE = '15-Apr-2024'
 
 # %% [markdown]
 # ## Connection Parameters
@@ -118,13 +118,23 @@ def getCorp(date):
             'primaryReserve': 'PrimaryReserve',
             'contingencyReserve': 'ContingencyReserve',
             'eheur': 'EHEUR',
-            'solar': 'Solar'
+            'solar': 'Solar',
+            'reportType': 'ReportType'
         }
         corpDf.rename(columns=nameTrans, inplace=True, errors='ignore')
 
         if 'secondaryReserve' in corpDf:
             corpDf.drop(columns='secondaryReserve', inplace=True)
 
+        for col in corpDf.columns:
+            if 'Date' in col:
+                corpDf[col] = pd.to_datetime(corpDf[col], format="%d-%b-%Y")
+                corpDf[col] = corpDf[col].dt.date
+            if 'Period' in col:
+                corpDf[col] = corpDf[col].astype(int)
+
+        corpDf = corpDf[['Date', 'Period'] +
+                        [col for col in corpDf.columns if col not in ['Date', 'Period']]]
         # corpDF should have 72 rows (24 + 48 periods)
         return corpDf
 
@@ -134,7 +144,7 @@ def getCorp(date):
         return error_xml_str
 
 
-if RUNTIME == 'FUNCTEST':
+if __name__ == '__main__':
     corpDf = getCorp(TESTDATE)
     if corpDf is not None:
         print(corpDf.iloc[0])
@@ -184,6 +194,9 @@ def getMCR001(date, loadScenario, runType='DPR'):
         </soapenv:Envelope>
         """
 
+    # print(payload)
+    # return
+
     res = emcRequest(url=url, data=payload)
     data = res.text
 
@@ -215,6 +228,13 @@ def getMCR001(date, loadScenario, runType='DPR'):
 
         mcrDf = pd.DataFrame(data)
 
+        for col in mcrDf.columns:
+            if 'Date' in col:
+                mcrDf[col] = pd.to_datetime(mcrDf[col])
+                mcrDf[col] = mcrDf[col].dt.date
+            if 'Period' in col:
+                mcrDf[col] = mcrDf[col].astype(int)
+
         return mcrDf
 
     except:
@@ -222,7 +242,7 @@ def getMCR001(date, loadScenario, runType='DPR'):
         return error_xml_str
 
 
-if RUNTIME == 'FUNCTEST':
+if __name__ == '__main__':
     mcrDf = getMCR001(TESTDATE, 'M')
     print(mcrDf.iloc[0])
 
@@ -252,12 +272,12 @@ def getMCRReport(reportName, mcrSerie):
 
                     <java:ReportBean>
                     <java:ParamName>FirstDate</java:ParamName>
-                    <java:ParamValue>{mcrSerie['FirstDate']}</java:ParamValue>
+                    <java:ParamValue>{mcrSerie['FirstDate'].strftime(format="%d-%b-%Y")}</java:ParamValue>
                     </java:ReportBean>
 
                     <java:ReportBean>
                     <java:ParamName>LastDate</java:ParamName>
-                    <java:ParamValue>{mcrSerie['LastDate']}</java:ParamValue>
+                    <java:ParamValue>{mcrSerie['LastDate'].strftime(format="%d-%b-%Y")}</java:ParamValue>
                     </java:ReportBean>
                 </mpap:reportBean>
             </mpap:getMCRReport>
@@ -320,6 +340,13 @@ def getMCRReport(reportName, mcrSerie):
         if "MCRID" in mcrReportDf.columns:
             mcrReportDf.drop(columns=["MCRID"], inplace=True)
 
+        for col in mcrReportDf.columns:
+            if 'Date' in col:
+                mcrReportDf[col] = pd.to_datetime(mcrReportDf[col])
+                mcrReportDf[col] = mcrReportDf[col].dt.date
+            if 'Period' in col:
+                mcrReportDf[col] = mcrReportDf[col].astype(int)
+
         return mcrReportDf
 
     except:
@@ -327,25 +354,30 @@ def getMCRReport(reportName, mcrSerie):
         return error_xml_str
 
 
-if RUNTIME == 'FUNCTEST':
+if __name__ == '__main__':
     for idx, mcrSerie in mcrDf.iterrows():
         # print(mcrSerie)
         mcrReportDf = getMCRReport('MCR010', mcrSerie)
-        print(mcrReportDf.iloc[0])
+        print(mcrReportDf)
+        # print(mcrReportDf.iloc[0])
         break
+
+# %% [markdown]
+# Test of all API
 
 # %%
 if __name__ == '__main__':
 
     corpDf = getCorp(TESTDATE)
-    corpDf.to_csv(f'Corp.csv', index=False)
+    corpDf.to_csv(f'{DATADIR}Corp_{TESTDATE}_0115.csv', index=False)
 
-    mcrDf = getMCR001(TESTDATE, 'M')
+    mcrDf = getMCR001(TESTDATE, 'L', runType='LAR')
+    mcrDf.to_csv(f'{DATADIR}MCR001_{TESTDATE}_1520_M.csv', index=False)
+
     mcr010 = getMCRReport('MCR010', mcrDf.iloc[0])
     mcr012 = getMCRReport('MCR012', mcrDf.iloc[0])
-
-    mcr010.to_csv(f'{DATADIR}MCR010.csv', index=False)
-    mcr012.to_csv(f'{DATADIR}MCR012.csv', index=False)
+    mcr010.to_csv(f'{DATADIR}MCR010_{TESTDATE}.csv', index=False)
+    mcr012.to_csv(f'{DATADIR}MCR012_{TESTDATE}.csv', index=False)
 
 
 # %%
