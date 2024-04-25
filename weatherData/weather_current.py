@@ -138,6 +138,5 @@ def add_to_db(df):
         return None
 
 current_data = get_current_weather(lat=lat, lon=lon, api_key=api_key)
-print(current_data)
 weather_df = process_current_data(current_data)
 add_to_db(weather_df)
