@@ -125,7 +125,7 @@ def add_to_db(df):
                 UPDATE SET "Main" = '{str(row['Main'])}', "Des" = '{str(row['Des'])}', "Temp" = {row['Temp']}, "Feels_like" = {row['Feels_like']}
                 , "Temp_max" = {row['Temp_max']}, "Temp_min" = {row['Temp_min']}, "Pressure" = {row['Pressure']}, "Humidity" = {row['Humidity']}, "Wind_speed" = {row['Wind_speed']}
                 , "Wind_deg" = {row['Wind_deg']}, "Pop" = {row['Pop']}, "Rain" = {row['Rain']}, "Clouds" = {row['Clouds']};
-            '''        
+            '''
             cur.execute(query=query)
             conn.commit()
         

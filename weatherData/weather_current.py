@@ -26,6 +26,19 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 lat = 1.3562
 lon = 103.849
+
+lat = 1.2838
+lon = 103.8591
+
+map = {
+    'Tengah Floating Solar Farm': [1.3481, 103.645],
+    'Jurong Island': [1.2752, 103.709],
+    'CBD': [1.2834, 103.852],
+    'Changi Airport':[1.3582,103.982],
+    'Woodlands':[1.4548,103.8]
+
+}
+
 api_key = '52eefa599155552610c8a6abb7659b98'
 def get_current_weather(lat:float, lon:float, api_key):
     url = f"https://api.openweathermap.org/data/2.5/weather?lat={str(lat)}&lon={str(lon)}&exclude=[daily,alerts,current,minutely]&appid={api_key}&units=metric"
@@ -112,7 +125,7 @@ def add_to_db(df):
                 UPDATE SET "Main" = '{str(row['Main'])}', "Des" = '{str(row['Des'])}', "Temp" = {row['Temp']}, "Feels_like" = {row['Feels_like']}
                 , "Temp_max" = {row['Temp_max']}, "Temp_min" = {row['Temp_min']}, "Pressure" = {row['Pressure']}, "Humidity" = {row['Humidity']}, "Wind_speed" = {row['Wind_speed']}
                 , "Wind_deg" = {row['Wind_deg']}, "Rain" = {row['Rain']}, "Clouds" = {row['Clouds']};
-            '''        
+            '''
             cur.execute(query=query)
             conn.commit()
         
@@ -125,5 +138,6 @@ def add_to_db(df):
         return None
 
 current_data = get_current_weather(lat=lat, lon=lon, api_key=api_key)
+print(current_data)
 weather_df = process_current_data(current_data)
 add_to_db(weather_df)
