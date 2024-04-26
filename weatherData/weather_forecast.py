@@ -1,6 +1,6 @@
 import requests
 import urllib3
-from datetime import datetime
+from datetime import datetime, timedelta
 import psycopg2
 import pandas as pd
 
@@ -8,10 +8,18 @@ import os
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-lat = 1.3562
-lon = 103.849
 api_key = '52eefa599155552610c8a6abb7659b98'
-def get_current_weather(lat:float, lon:float, api_key):
+
+map = {
+    'Tengah Floating Solar Farm': [1.3481, 103.645],
+    'Jurong Island': [1.2752, 103.709],
+    'CBD': [1.2834, 103.852],
+    'Changi Airport':[1.3582,103.982],
+    'Woodlands':[1.4548,103.8],
+    'Serangoon':[1.355, 103.868]
+}
+
+def get_forecast_weather(lat:float, lon:float, api_key):
     url = f"https://api.openweathermap.org/data/2.5/forecast?lat={str(lat)}&lon={str(lon)}&appid={api_key}&units=metric"
     payload = {}
     headers = {}
@@ -28,6 +36,10 @@ def process_forecast_data(data):
 
     latitude = data['city']['coord']['lat']
     longtitude = data['city']['coord']['lon']
+    if data['city'].get('timezone'):
+        timezone = data['city']['timezone']
+    else:
+        timezone = 0
     data_list = data['list']
 
     forecast_df = pd.DataFrame({
@@ -53,7 +65,7 @@ def process_forecast_data(data):
 
     for interval in range(len(data_list)):
         dt = data_list[interval]['dt']
-        dt_object = datetime.fromtimestamp(dt)
+        dt_object = datetime.fromtimestamp(dt) + timedelta(seconds=timezone)        
         date = dt_object.strftime('%Y-%m-%d')
         timestamp = dt_object.strftime('%H:%M:%S')
         hour = dt_object.strftime('%H')
@@ -109,7 +121,7 @@ def add_to_db(df):
     DBNAME = "postgres"
     password = "SDCsdc1234"
 
-    print('Connecting to DB')
+    print('Connecting to Weather Forecast DB')
 
     try:
         conn = psycopg2.connect(host=ENDPOINT, port=PORT, database=DBNAME, user=USER, password=password)
@@ -129,14 +141,27 @@ def add_to_db(df):
             cur.execute(query=query)
             conn.commit()
         
-        print("Successful connection")
+        print(f"Successful commit on {row['Date']},{str(row['Timestamp'])}")
 
         return True
 
     except Exception as e:
-        print("Error: "+ str(e))
+        conn.rollback()
+        print(f"Unsuccessful commit on {row['Date']},{str(row['Timestamp'])}\n Error: {str(e)}")
         return None
 
-data = get_current_weather(lat=lat,lon=lon,api_key=api_key)
-forecast_df = process_forecast_data(data)
-add_to_db(forecast_df)
+for location in map.keys():
+    lat = map[location][0]
+    lon = map[location][1]
+    print(f'Retrieving weather for {location}')
+    forecast_data = get_forecast_weather(lat=lat, lon=lon, api_key=api_key)
+    if forecast_data:
+        print('Data retrieved')
+        weather_df = process_forecast_data(forecast_data)
+    else:
+        print('No data retrieved')
+    if weather_df is not None:
+        print('Data processed')
+        add_to_db(weather_df)
+    else:
+        print('Data not processed')

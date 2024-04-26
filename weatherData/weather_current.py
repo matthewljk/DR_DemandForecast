@@ -1,6 +1,6 @@
 import requests
 import urllib3
-from datetime import datetime
+from datetime import datetime, timedelta
 import psycopg2
 import pandas as pd
 
@@ -24,19 +24,13 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # else:
 #     print("Failed to retrieve data")
 
-lat = 1.3562
-lon = 103.849
-
-lat = 1.2838
-lon = 103.8591
-
 map = {
     'Tengah Floating Solar Farm': [1.3481, 103.645],
     'Jurong Island': [1.2752, 103.709],
     'CBD': [1.2834, 103.852],
     'Changi Airport':[1.3582,103.982],
-    'Woodlands':[1.4548,103.8]
-
+    'Woodlands':[1.4548,103.8],
+    'Serangoon':[1.355, 103.868]
 }
 
 api_key = '52eefa599155552610c8a6abb7659b98'
@@ -71,8 +65,15 @@ def process_current_data(data):
     else:
         rain = 0
     clouds = data['clouds']['all']
+
+    if data.get('timezone'):
+        timezone = data['timezone']
+    else:
+        timezone = 0
+    
     dt = data['dt']
-    dt_object = datetime.fromtimestamp(dt)
+    
+    dt_object = datetime.fromtimestamp(dt) + timedelta(seconds=timezone)
     date = dt_object.strftime('%Y-%m-%d')
     timestamp = dt_object.strftime('%H:%M:%S')
     hour = dt_object.strftime('%H')
@@ -109,7 +110,7 @@ def add_to_db(df):
     DBNAME = "postgres"
     password = "SDCsdc1234"
 
-    print('Connecting to DB')
+    print('Connecting to Weather_Data DB')
 
     try:
         conn = psycopg2.connect(host=ENDPOINT, port=PORT, database=DBNAME, user=USER, password=password)
@@ -129,14 +130,19 @@ def add_to_db(df):
             cur.execute(query=query)
             conn.commit()
         
-        print("Successful connection")
-
+        print(f"Successful commit on {row['Date']},{str(row['Timestamp'])}")
         return True
 
     except Exception as e:
-        print("Error: "+ str(e))
+        conn.rollback()
+        print(f"Unsuccessful commit on {row['Date']},{str(row['Timestamp'])}\n Error: {str(e)}")
         return None
 
-current_data = get_current_weather(lat=lat, lon=lon, api_key=api_key)
-weather_df = process_current_data(current_data)
-add_to_db(weather_df)
+
+for location in map.keys():
+    lat = map[location][0]
+    lon = map[location][1]
+    print(f'Retrieving weather for {location}')
+    current_data = get_current_weather(lat=lat, lon=lon, api_key=api_key)
+    weather_df = process_current_data(current_data)
+    add_to_db(weather_df)
