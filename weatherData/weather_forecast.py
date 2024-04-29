@@ -11,11 +11,11 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 api_key = '52eefa599155552610c8a6abb7659b98'
 
 map = {
-    'Tengah Floating Solar Farm': [1.3481, 103.645],
-    'Jurong Island': [1.2752, 103.709],
-    'CBD': [1.2834, 103.852],
-    'Changi Airport':[1.3582,103.982],
-    'Woodlands':[1.4548,103.8],
+    'Tengah Floating Solar Farm': [1.348, 103.645],
+    'Jurong Island': [1.275, 103.709],
+    'CBD': [1.283, 103.852],
+    'Changi Airport':[1.358,103.982],
+    'Woodlands':[1.454,103.8],
     'Serangoon':[1.355, 103.868]
 }
 
@@ -34,8 +34,8 @@ def get_forecast_weather(lat:float, lon:float, api_key):
 
 def process_forecast_data(data):
 
-    latitude = data['city']['coord']['lat']
-    longtitude = data['city']['coord']['lon']
+    latitude = round(data['city']['coord']['lat'],3)
+    longtitude = round(data['city']['coord']['lon'],3)
     if data['city'].get('timezone'):
         timezone = data['city']['timezone']
     else:
